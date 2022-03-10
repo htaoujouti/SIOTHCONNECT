@@ -8,15 +8,7 @@ namespace SIOTHCONNECT
 {
     public class TCPing : Ping
     {
-        private int port { get; set; }
+        public int port { get; set; }
 
-        public TCPing() { }
-        public TCPing(string IPAddress, int timeOut, int retry, int port)
-        {
-            this.IPAddress = IPAddress;
-            this.timeOut = timeOut;
-            this.retry = retry;
-            this.port = port;               
-        }
     }
 }
