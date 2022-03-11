@@ -51,6 +51,7 @@ namespace SIOTHCONNECT
             //    SaveBtn.Enabled = false;
             //}
             //else { SaveBtn.Enabled = true; }
+
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
@@ -100,6 +101,7 @@ namespace SIOTHCONNECT
                 //    Contrat contrat = new Contrat(ping);
                 //    File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
                 //}
+
                 #endregion
 
             }

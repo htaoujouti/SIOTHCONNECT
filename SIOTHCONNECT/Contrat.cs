@@ -26,5 +26,6 @@ namespace SIOTHCONNECT
         //     this.ping = ping;
         //     this.tCPing = tCPing;
         // }
+
     }
 }
