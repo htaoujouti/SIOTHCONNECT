@@ -5,6 +5,10 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIOTHCONNECT", "SIOTHCONNECT\SIOTHCONNECT.csproj", "{3EA11B0C-36E9-4B3E-9243-0006D5E17DB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationObjects.Red.Service", "IntegrationObjects.Red.Service\IntegrationObjects.Red.Service.csproj", "{7D65255F-88FD-40FB-BB6A-E5B6D8D68504}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationObjects.Common.Library", "IntegrationObjects.Common.Library\IntegrationObjects.Common.Library.csproj", "{0A3F1886-874D-4B08-B5F5-E32A9442C417}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{3EA11B0C-36E9-4B3E-9243-0006D5E17DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EA11B0C-36E9-4B3E-9243-0006D5E17DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EA11B0C-36E9-4B3E-9243-0006D5E17DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D65255F-88FD-40FB-BB6A-E5B6D8D68504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D65255F-88FD-40FB-BB6A-E5B6D8D68504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D65255F-88FD-40FB-BB6A-E5B6D8D68504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D65255F-88FD-40FB-BB6A-E5B6D8D68504}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A3F1886-874D-4B08-B5F5-E32A9442C417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A3F1886-874D-4B08-B5F5-E32A9442C417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A3F1886-874D-4B08-B5F5-E32A9442C417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A3F1886-874D-4B08-B5F5-E32A9442C417}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

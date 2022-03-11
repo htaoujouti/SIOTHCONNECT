@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SIOTHCONNECT
+namespace IntegrationObjects.Common.Library
 {
     public class TCPing : Ping
     {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IntegrationObjects.Common.Library;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -76,7 +77,7 @@ namespace SIOTHCONNECT
                     retry = (int)tcpingRetry.Value,
                     timeOut = (int)tcpingTimeOut.Value
                 };
-                Contrat contrat = new Contrat()
+                ConfigurationFile contrat = new ConfigurationFile()
                 {
                     IsPingEnabled = PingChB.Checked,
                     IsTCPingEnabled = TCPingCheckBox.Checked,
