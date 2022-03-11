@@ -21,60 +21,87 @@ namespace SIOTHCONNECT
 
         private void PingChB_CheckedChanged(object sender, EventArgs e)
         {
-            if (PingChB.Checked)
-            {
-                PingGB.Enabled = true;
-            }
-            else { PingGB.Enabled = false; }
-            if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
-            {
-                SaveBtn.Enabled = false;
-            }
-            else { SaveBtn.Enabled = true; }
+            PingGB.Enabled = PingChB.Checked;
+            //if (PingChB.Checked)
+            //{
+            //    PingGB.Enabled = true;
+            //}
+            //else { PingGB.Enabled = false; }
+            SaveBtn.Enabled = (PingChB.Checked || TCPingCheckBox.Checked);
+
+            //if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
+            //{
+            //    SaveBtn.Enabled = false;
+            //}
+            //else { SaveBtn.Enabled = true; }
         }
 
         private void TCPingCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            //TCPingGB.Enabled = TCPingCheckBox.Checked;
-            if (TCPingCheckBox.Checked)
-            {
-                TCPingGB.Enabled = true;
-            }
-            else { TCPingGB.Enabled = false; }
-            if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
-            {
-                SaveBtn.Enabled = false;
-            }
-            else { SaveBtn.Enabled = true; }
+            TCPingGB.Enabled = TCPingCheckBox.Checked;
+            //if (TCPingCheckBox.Checked)
+            //{
+            //    TCPingGB.Enabled = true;
+            //}
+            //else { TCPingGB.Enabled = false; }
+            SaveBtn.Enabled = (PingChB.Checked || TCPingCheckBox.Checked);
+
+            //if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
+            //{
+            //    SaveBtn.Enabled = false;
+            //}
+            //else { SaveBtn.Enabled = true; }
+
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                
+                Ping ping = new Ping()
+                {
+                    IPAddress = IpPing.Text,
+                    retry = (int)retryPing.Value,
+                    timeOut = (int)timeOutPing.Value
+                };
+                TCPing tCPing = new TCPing()
+                {   
+                    IPAddress = tcpingIp.Text,                    
+                    port = (int)port.Value,
+                    retry = (int)tcpingRetry.Value,
+                    timeOut = (int)tcpingTimeOut.Value
+                };
+                Contrat contrat = new Contrat()
+                {
+                    IsPingEnabled = PingChB.Checked,
+                    IsTCPingEnabled = TCPingCheckBox.Checked,
+                    ping = ping,
+                    tCPing = tCPing
+                };
+                File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
                 #region HamzaCode
-                if ((PingChB.Checked) && (TCPingCheckBox.Checked))
-                {
-                    TCPing tCPing = new TCPing(tcpingIp.Text, (int)tcpingTimeOut.Value, (int)tcpingRetry.Value, (int)port.Value);
-                    Ping ping = new Ping(IpPing.Text, (int)timeOutPing.Value, (int)retryPing.Value);
-                    Contrat contrat = new Contrat(ping, tCPing);
-                    File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
-                    return;
-                }
-                if (TCPingCheckBox.Checked)
-                {
-                    TCPing tCPing = new TCPing(tcpingIp.Text, (int)tcpingTimeOut.Value, (int)tcpingRetry.Value, (int)port.Value);
-                    Contrat contrat = new Contrat(tCPing);
-                    File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
-                    return;
-                }
-                if (PingChB.Checked)
-                {
-                    Ping ping = new Ping(IpPing.Text, (int)timeOutPing.Value, (int)retryPing.Value);
-                    Contrat contrat = new Contrat(ping);
-                    File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
-                }
+                //if ((PingChB.Checked) && (TCPingCheckBox.Checked))
+                //{
+                //    TCPing tCPing = new TCPing(tcpingIp.Text, (int)tcpingTimeOut.Value, (int)tcpingRetry.Value, (int)port.Value);
+                //    Ping ping = new Ping(IpPing.Text, (int)timeOutPing.Value, (int)retryPing.Value);
+                //    Contrat contrat = new Contrat(ping, tCPing);
+                //    File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
+                //    return;
+                //}
+                //if (TCPingCheckBox.Checked)
+                //{
+                //    TCPing tCPing = new TCPing(tcpingIp.Text, (int)tcpingTimeOut.Value, (int)tcpingRetry.Value, (int)port.Value);
+                //    Contrat contrat = new Contrat(tCPing);
+                //    File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
+                //    return;
+                //}
+                //if (PingChB.Checked)
+                //{
+                //    Ping ping = new Ping(IpPing.Text, (int)timeOutPing.Value, (int)retryPing.Value);
+                //    Contrat contrat = new Contrat(ping);
+                //    File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
+                //}
+
                 #endregion
 
             }

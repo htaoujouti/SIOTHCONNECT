@@ -60,6 +60,8 @@
             // PingChB
             // 
             this.PingChB.AutoSize = true;
+            this.PingChB.Checked = true;
+            this.PingChB.CheckState = System.Windows.Forms.CheckState.Checked;
             this.PingChB.Location = new System.Drawing.Point(12, 46);
             this.PingChB.Name = "PingChB";
             this.PingChB.Size = new System.Drawing.Size(47, 17);
@@ -163,7 +165,6 @@
             this.PingGB.Controls.Add(this.retryPing);
             this.PingGB.Controls.Add(this.label1);
             this.PingGB.Controls.Add(this.IpPing);
-            this.PingGB.Enabled = false;
             this.PingGB.Location = new System.Drawing.Point(79, 46);
             this.PingGB.Name = "PingGB";
             this.PingGB.Size = new System.Drawing.Size(414, 67);
@@ -293,7 +294,6 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Enabled = false;
             this.SaveBtn.Location = new System.Drawing.Point(274, 257);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(75, 23);
