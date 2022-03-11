@@ -12,7 +12,7 @@ namespace SIOTHCONNECT
         public TCPing tCPing;
         public bool IsPingEnabled { get; set; }
         public bool IsTCPingEnabled { get; set; }
-        
+        #region HamzaCode
         // public Contrat() { }
         // public Contrat(TCPing tCPing)
         // {
@@ -26,6 +26,6 @@ namespace SIOTHCONNECT
         //     this.ping = ping;
         //     this.tCPing = tCPing;
         // }
-
+        #endregion
     }
 }

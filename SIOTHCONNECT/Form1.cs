@@ -22,36 +22,41 @@ namespace SIOTHCONNECT
         private void PingChB_CheckedChanged(object sender, EventArgs e)
         {
             PingGB.Enabled = PingChB.Checked;
+            #region HamzaCode
             //if (PingChB.Checked)
             //{
             //    PingGB.Enabled = true;
             //}
             //else { PingGB.Enabled = false; }
+            #endregion
             SaveBtn.Enabled = (PingChB.Checked || TCPingCheckBox.Checked);
-
+            #region HamzaCode
             //if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
             //{
             //    SaveBtn.Enabled = false;
             //}
             //else { SaveBtn.Enabled = true; }
+            #endregion
         }
 
         private void TCPingCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             TCPingGB.Enabled = TCPingCheckBox.Checked;
+            #region HamzaCode
             //if (TCPingCheckBox.Checked)
             //{
             //    TCPingGB.Enabled = true;
             //}
             //else { TCPingGB.Enabled = false; }
+            #endregion
             SaveBtn.Enabled = (PingChB.Checked || TCPingCheckBox.Checked);
-
+            #region HamzaCode
             //if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
             //{
             //    SaveBtn.Enabled = false;
             //}
             //else { SaveBtn.Enabled = true; }
-
+            #endregion
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
