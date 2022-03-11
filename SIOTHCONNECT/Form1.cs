@@ -27,12 +27,13 @@ namespace SIOTHCONNECT
             //    PingGB.Enabled = true;
             //}
             //else { PingGB.Enabled = false; }
+            SaveBtn.Enabled = (PingChB.Checked || TCPingCheckBox.Checked);
 
-            if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
-            {
-                SaveBtn.Enabled = false;
-            }
-            else { SaveBtn.Enabled = true; }
+            //if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
+            //{
+            //    SaveBtn.Enabled = false;
+            //}
+            //else { SaveBtn.Enabled = true; }
         }
 
         private void TCPingCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -43,35 +44,40 @@ namespace SIOTHCONNECT
             //    TCPingGB.Enabled = true;
             //}
             //else { TCPingGB.Enabled = false; }
-            if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
-            {
-                SaveBtn.Enabled = false;
-            }
-            else { SaveBtn.Enabled = true; }
+            SaveBtn.Enabled = (PingChB.Checked || TCPingCheckBox.Checked);
+
+            //if ((!TCPingCheckBox.Checked) && (!PingChB.Checked))
+            //{
+            //    SaveBtn.Enabled = false;
+            //}
+            //else { SaveBtn.Enabled = true; }
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                Ping ping1 = new Ping()
+                Ping ping = new Ping()
                 {
                     IPAddress = IpPing.Text,
-                    retry = ,
+                    retry = (int)retryPing.Value,
+                    timeOut = (int)timeOutPing.Value
                 };
-                TCPing tCPing1 = new TCPing()
-                {
-                    port = ,
-                    
+                TCPing tCPing = new TCPing()
+                {   
+                    IPAddress = tcpingIp.Text,                    
+                    port = (int)port.Value,
+                    retry = (int)tcpingRetry.Value,
+                    timeOut = (int)tcpingTimeOut.Value
                 };
-                Contrat contrat1 = new Contrat()
+                Contrat contrat = new Contrat()
                 {
                     IsPingEnabled = PingChB.Checked,
                     IsTCPingEnabled = TCPingCheckBox.Checked,
-                    ping = ping1,
-                    tCPing = tCPing1
+                    ping = ping,
+                    tCPing = tCPing
                 };
-                File.WriteAllText("", JsonConvert.SerializeObject(contrat1));
+                File.WriteAllText(@"C:\Users\htaoujouti\Desktop\contrat.json", JsonConvert.SerializeObject(contrat));
                 #region HamzaCode
                 //if ((PingChB.Checked) && (TCPingCheckBox.Checked))
                 //{
