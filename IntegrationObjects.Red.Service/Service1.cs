@@ -32,6 +32,7 @@ namespace IntegrationObjects.Red.Service
             {
                 ConfigurationFile contrat =  JsonConvert.DeserializeObject<ConfigurationFile>(File.ReadAllText(@"C:\Users\htaoujouti\Desktop\contrat.json"));
                 RedJob red = new RedJob(contrat);
+               // red.PingMethodOnly();
             }
             catch (Exception Ex)
             {
