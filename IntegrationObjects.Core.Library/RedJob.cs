@@ -19,107 +19,101 @@ namespace IntegrationObjects.Core.Library
 
             if (configurationFile.IsPingEnabled && !configurationFile.IsTCPingEnabled)
             {   // based con config -->Start threads 
-               
-                    Thread thread = new Thread(() => PingMethodOnly(configurationFile));
-                    thread.Start();
-                    thread.Name = "PINGThread";
-                    thread.IsBackground = true;
-                
+
+                Thread thread = new Thread(() => Ping(configurationFile));
+                thread.Start();
+                thread.Name = "PINGThread";
+                thread.IsBackground = true;
+
             }
             else if (!configurationFile.IsPingEnabled && configurationFile.IsTCPingEnabled)
             {   // based con config -->Start threads 
-                
-                    Thread thread = new Thread(() => TCPingMethodOnly(configurationFile));
-                    thread.Start();
-                    thread.Name = "TCPINGthread";
-                    thread.IsBackground = true;
-                
+                Thread thread = new Thread(() => TCPing(configurationFile));
+                thread.Start();
+                thread.Name = "TCPINGthread";
+                thread.IsBackground = true;
+
             }
             else if (configurationFile.IsPingEnabled && configurationFile.IsTCPingEnabled)
             {
-               
-                    Thread Thread = new Thread(() => {
-                        PingAndTCPing(configurationFile);
-                    });
-                    Thread.Start();
-                    Thread.Name = "Ping&TCPingThread";
-                    Thread.IsBackground = true;
-                   
-            }
-            else
-            {
+                Thread Thread = new Thread(() => PingAndTCPing(configurationFile));
+                Thread.Start();
+                Thread.Name = "PingAndTCPingThread";
+                Thread.IsBackground = true;
 
             }
 
         }
-
-        private void PingAndTCPing(ConfigurationFile configurationFile)
+        public void PingAndTCPing(ConfigurationFile configurationFile)
         {
             while (true)
             {
-                
+                PingMethodOnly(configurationFile);
+                TCPingMethodOnly(configurationFile);
+                Thread.Sleep(1000);
             }
         }
-
+        public void Ping(ConfigurationFile configurationFile)
+        {
+            while (true)
+            {
+                PingMethodOnly(configurationFile);
+                Thread.Sleep(1000);
+            }
+        }
+        public void TCPing(ConfigurationFile configurationFile)
+        {
+            while (true)
+            {
+                TCPingMethodOnly(configurationFile);
+                Thread.Sleep(1000);
+            }
+        }
         public void PingMethodOnly(ConfigurationFile config)
         {
             try
 
             {
-                while (true)
-                {
-                    // your code here
-                    Ping PingSender = new Ping();
-                    long TotalTime = 0;
+                // your code here
+                Ping PingSender = new Ping();
+                long TotalTime = 0;
 
-                    for (int i = 0; i < config.ping.retry; i++)
-                    {
-                        PingReply reply = PingSender.Send(config.ping.IPAddress, config.ping.timeOut);
-                        if (reply.Status == IPStatus.Success)
-                        {
-                            TotalTime += reply.RoundtripTime;
-                        }
-                        Console.WriteLine(reply.Status.ToString());
-                    }
-                    TotalTime = (TotalTime / config.ping.retry);
-                    // log stats
+                for (int i = 0; i < config.ping.retry; i++)
+                {
+                    PingReply reply = PingSender.Send(config.ping.IPAddress, config.ping.timeOut);
+                    if (reply.Status == IPStatus.Success)
+                        TotalTime += reply.RoundtripTime;
+                    Console.WriteLine(reply.Status.ToString());
                 }
+                TotalTime = (TotalTime / config.ping.retry);
+                // log stats
+
             }
             catch (Exception Ex)
             {   //log
-                Console.WriteLine("Invalid Ip Address");
+                
+                Console.WriteLine(Ex.Message);
             }
-            Thread.Sleep(1000);
         }
-        
         public void TCPingMethodOnly(ConfigurationFile config)
         {
             try
-    {
-        while (true)
-        {
-            var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            var stopwatch = new Stopwatch();
-            double t = stopwatch.Elapsed.TotalMilliseconds;
-
-            for (int i = 0; i < config.tCPing.retry; i++)
-            {   // Measure the Connect call only
-                stopwatch.Start();
-                sock.Connect(config.tCPing.IPAddress, config.tCPing.port);
-                stopwatch.Stop();
-                if (sock.Connected) Console.WriteLine("Success");
-                else Console.WriteLine("failed");
-                Console.WriteLine("{0:0.00}ms", t);
-                sock.Close();
+            {                
+                for (int i = 0; i < config.tCPing.retry; i++)
+                {
+                    var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    sock.Blocking = true;
+                    sock.Connect(config.tCPing.IPAddress, config.tCPing.port);
+                    if (sock.Connected) Console.WriteLine("Success");
+                    else Console.WriteLine("failed");
+                    sock.Close();
+                }
             }
-        } }
-    catch (Exception Ex)
-    {
-        Console.WriteLine("Invalid Ip Address or ports");
-    }
-            Thread.Sleep(1000);
-
+            catch (Exception ex)
+            {
+                
+                Console.WriteLine(ex.Message);
+            }
         }
-
     }
 }
