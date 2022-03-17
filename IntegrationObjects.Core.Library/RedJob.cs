@@ -19,39 +19,32 @@ namespace IntegrationObjects.Core.Library
 
             if (configurationFile.IsPingEnabled && !configurationFile.IsTCPingEnabled)
             {   // based con config -->Start threads 
-                while (true)
-                {
+               
                     Thread thread = new Thread(() => PingMethodOnly(configurationFile));
                     thread.Start();
                     thread.Name = "PINGThread";
                     thread.IsBackground = true;
-                    Thread.Sleep(1000);
-                }
+                
             }
             else if (!configurationFile.IsPingEnabled && configurationFile.IsTCPingEnabled)
             {   // based con config -->Start threads 
-                while (true)
-                {
+                
                     Thread thread = new Thread(() => TCPingMethodOnly(configurationFile));
                     thread.Start();
                     thread.Name = "TCPINGthread";
                     thread.IsBackground = true;
-                    Thread.Sleep(1000);
-                }
+                
             }
             else if (configurationFile.IsPingEnabled && configurationFile.IsTCPingEnabled)
             {
-                while (true)
-                {
-                    Thread Thread = new Thread(() => { 
-                        PingMethodOnly(configurationFile);
-                        TCPingMethodOnly(configurationFile);
+               
+                    Thread Thread = new Thread(() => {
+                        PingAndTCPing(configurationFile);
                     });
                     Thread.Start();
                     Thread.Name = "Ping&TCPingThread";
                     Thread.IsBackground = true;
-                    Thread.Sleep(1000);                                     
-                }
+                   
             }
             else
             {
@@ -59,56 +52,72 @@ namespace IntegrationObjects.Core.Library
             }
 
         }
+
+        private void PingAndTCPing(ConfigurationFile configurationFile)
+        {
+            while (true)
+            {
+                
+            }
+        }
+
         public void PingMethodOnly(ConfigurationFile config)
         {
             try
-            {   // your code here
-                Ping PingSender = new Ping();
-                long TotalTime = 0;
 
-                for (int i = 0; i < config.ping.retry; i++)
+            {
+                while (true)
                 {
-                    PingReply reply = PingSender.Send(config.ping.IPAddress, config.ping.timeOut);
-                    if (reply.Status == IPStatus.Success)
+                    // your code here
+                    Ping PingSender = new Ping();
+                    long TotalTime = 0;
+
+                    for (int i = 0; i < config.ping.retry; i++)
                     {
-                        TotalTime += reply.RoundtripTime;
+                        PingReply reply = PingSender.Send(config.ping.IPAddress, config.ping.timeOut);
+                        if (reply.Status == IPStatus.Success)
+                        {
+                            TotalTime += reply.RoundtripTime;
+                        }
+                        Console.WriteLine(reply.Status.ToString());
                     }
-                    Console.WriteLine(reply.Status.ToString());
+                    TotalTime = (TotalTime / config.ping.retry);
+                    // log stats
                 }
-                TotalTime = (TotalTime / config.ping.retry);
-                // log stats
             }
             catch (Exception Ex)
             {   //log
                 Console.WriteLine("Invalid Ip Address");
-                
             }
             Thread.Sleep(1000);
         }
+        
         public void TCPingMethodOnly(ConfigurationFile config)
         {
             try
-            {
-                var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                var stopwatch = new Stopwatch();
-                double t = stopwatch.Elapsed.TotalMilliseconds;
+    {
+        while (true)
+        {
+            var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            var stopwatch = new Stopwatch();
+            double t = stopwatch.Elapsed.TotalMilliseconds;
 
-                for (int i = 0; i < config.tCPing.retry; i++)
-                {   // Measure the Connect call only
-                    stopwatch.Start();
-                    sock.Connect(config.tCPing.IPAddress, config.tCPing.port);
-                    stopwatch.Stop();
-                    if (sock.Connected) Console.WriteLine("Success");
-                    else Console.WriteLine("failed");
-                    Console.WriteLine("{0:0.00}ms", t);
-                    sock.Close();
-                }
+            for (int i = 0; i < config.tCPing.retry; i++)
+            {   // Measure the Connect call only
+                stopwatch.Start();
+                sock.Connect(config.tCPing.IPAddress, config.tCPing.port);
+                stopwatch.Stop();
+                if (sock.Connected) Console.WriteLine("Success");
+                else Console.WriteLine("failed");
+                Console.WriteLine("{0:0.00}ms", t);
+                sock.Close();
             }
-            catch (Exception Ex)
-            {
-                Console.WriteLine("Invalid Ip Address or ports");
-            }
-                            Thread.Sleep(1000);
+        } }
+    catch (Exception Ex)
+    {
+        Console.WriteLine("Invalid Ip Address or ports");
+    }
+            Thread.Sleep(1000);
 
         }
 
