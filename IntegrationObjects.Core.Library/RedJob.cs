@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 using Ping = System.Net.NetworkInformation.Ping;
 
 namespace IntegrationObjects.Core.Library
@@ -77,13 +78,13 @@ namespace IntegrationObjects.Core.Library
                 // your code here
                 Ping PingSender = new Ping();
                 long TotalTime = 0;
-
+                Log.Logger = new LoggerConfiguration().WriteTo.File("logs/myapp.txt").CreateLogger();
                 for (int i = 0; i < config.ping.retry; i++)
                 {
                     PingReply reply = PingSender.Send(config.ping.IPAddress, config.ping.timeOut);
                     if (reply.Status == IPStatus.Success)
                         TotalTime += reply.RoundtripTime;
-                    Console.WriteLine(reply.Status.ToString());
+                    Log.Information(reply.Status.ToString());
                 }
                 TotalTime = (TotalTime / config.ping.retry);
                 // log stats
@@ -93,26 +94,26 @@ namespace IntegrationObjects.Core.Library
             {   //log
                 
                 Console.WriteLine(Ex.Message);
+                Log.Error(Ex.Message);
             }
         }
         public void TCPingMethodOnly(ConfigurationFile config)
         {
             try
-            {                
+            {
+                Log.Logger = new LoggerConfiguration().WriteTo.File("logs/myapp.txt").CreateLogger();
                 for (int i = 0; i < config.tCPing.retry; i++)
                 {
                     var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     sock.Blocking = true;
                     sock.Connect(config.tCPing.IPAddress, config.tCPing.port);
-                    if (sock.Connected) Console.WriteLine("Success");
-                    else Console.WriteLine("failed");
+                    if (sock.Connected) Log.Information($"TCPing {config.tCPing.IPAddress}:{config.tCPing.port} is successful");
                     sock.Close();
                 }
             }
             catch (Exception ex)
             {
-                
-                Console.WriteLine(ex.Message);
+                Log.Error(ex.Message);
             }
         }
     }
