@@ -78,13 +78,13 @@ namespace IntegrationObjects.Core.Library
                 // your code here
                 Ping PingSender = new Ping();
                 long TotalTime = 0;
-                Log.Logger = new LoggerConfiguration().WriteTo.File("logs/myapp.txt").CreateLogger();
+                Log.Logger = new LoggerConfiguration().WriteTo.File("logs/connect.txt", shared: true).CreateLogger();
                 for (int i = 0; i < config.ping.retry; i++)
                 {
                     PingReply reply = PingSender.Send(config.ping.IPAddress, config.ping.timeOut);
                     if (reply.Status == IPStatus.Success)
                         TotalTime += reply.RoundtripTime;
-                    Log.Information(reply.Status.ToString());
+                    Log.Information($"Ping: {config.ping.IPAddress} is {reply.Status.ToString()}");
                 }
                 TotalTime = (TotalTime / config.ping.retry);
                 // log stats
@@ -92,7 +92,7 @@ namespace IntegrationObjects.Core.Library
             }
             catch (Exception Ex)
             {   //log
-                
+
                 Console.WriteLine(Ex.Message);
                 Log.Error(Ex.Message);
             }
@@ -101,7 +101,7 @@ namespace IntegrationObjects.Core.Library
         {
             try
             {
-                Log.Logger = new LoggerConfiguration().WriteTo.File("logs/myapp.txt").CreateLogger();
+                Log.Logger = new LoggerConfiguration().WriteTo.File("logs/connect.txt", shared: true).CreateLogger();
                 for (int i = 0; i < config.tCPing.retry; i++)
                 {
                     var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
